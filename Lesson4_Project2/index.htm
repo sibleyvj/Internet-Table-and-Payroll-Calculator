@@ -5,8 +5,8 @@
       LIS 2360:  Web Application Development
       Lesson 4 - Project 2
 
-      Author: 
-      Date:   
+      Author: Vincent Sibley
+      Date:   6/10/15
 
       Filename: index.htm
    -->
@@ -14,7 +14,7 @@
    <meta name="viewport" content="width=device-width,initial-scale=1.0">
    <title>Lesson 4 - Project #2</title>
    <link rel="stylesheet" href="styles.css" />
-    
+    <script src=”modernizr.custom.05819.js”></script>
 </head>
 
 <body>
@@ -52,24 +52,89 @@
           <fieldset id="employeeinfo">
             <legend>Employee Summary</legend>
              <label>                  
-                 
+                 <p id="firstlast"></p>
+                 <p id="fname"></p>
+                 <p id="hoursWorked"></p>
+                 <p id="hourlyWage"></p>
              </label>              
           </fieldset>
             
           <fieldset id="calculationinfo">
             <legend>Calculations</legend>
              <label>                  
-                 
+                 <p id="grosspay"></p>
+                 <p id="fedwith"></p>
+                 <p id="statewith"></p>
+                 <p id="totalded"></p>
+                 <p id="netpay"></p>
              </label>              
           </fieldset>
             
         </fieldset>
           
         <fieldset id="calculatebutton">
-          <button type="button"  > Calculate! </button>
+          <button type="button" onclick="myFunction()" > Calculate! </button>
         </fieldset>
     
- 
+         <script>
+             function myFunction( ) {
+                 //Declare variables for Employee Information
+                 var lastname = document.getElementById("lnameInput");
+                 var firstname = document.getElementById("fnameInput");
+                 var hours = document.getElementById("hoursInput");
+                 var rate = document.getElementById("wageInput");
+                 var empName = firstname.value + " " + lastname.value;
+                 
+                 //Declare variables for Payroll Calculations
+ var wageRate;
+ var hoursWorked;
+ var grossPay;
+ var netPay;
+ var fedTaxWith;
+ var stateTaxWith;
+ var totDeductions;
+             
+             //Declare Constants (withholding rates)
+ const FED_RATE = 0.15; //federal rate
+ const STATE_RATE = 0.034; //state rate
+
+             
+             //Convert the String to a Float using parseFloat() function for calculations
+ wageRate = parseFloat(rate.value);
+ hoursWorked = parseFloat(hours.value);
+             
+             //Calculate Gross Pay
+ grossPay = hoursWorked * wageRate;
+             
+             //Calculate Federal Withholdings
+ fedTaxWith = grossPay * FED_RATE;
+             
+             //Calculate State Withholdings
+ stateTaxWith = grossPay * STATE_RATE;
+             
+             //Calculate Total Deductions
+ totDeductions = fedTaxWith + stateTaxWith; 
+             
+             //Calculate Net Pay
+ netPay = grossPay - totDeductions; 
+             
+
+             
+             
+             //Display Employee Information
+//document.getElementById("firstlast").innerHTML = "Employee Name: " + empName.toUpperCase();
+document.getElementById("hoursWorked").innerHTML = "Hours Worked: " + hours.value;
+document.getElementById("hourlyWage").innerHTML = "Hourly Wage Rate: " + rate.value;
+             
+             //Display Payroll Calculation Results
+ document.getElementById("grosspay").innerHTML = "Gross Pay:" + grossPay.toFixed(2);
+ document.getElementById("fedwith").innerHTML = "Federal Income Tax: " + fedTaxWith.toFixed(2);
+ document.getElementById("statewith").innerHTML = "State Income Tax: " + stateTaxWith.toFixed(2);
+ document.getElementById("totalded").innerHTML = "Total Deductions: " + totDeductions.toFixed(2);
+ document.getElementById("netpay").innerHTML = "Net Pay: " + netPay.toFixed(2);
+                 }//end of myFunction
+</script>
+          
      </form>
   </article>   
     
